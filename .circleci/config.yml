@@ -26,19 +26,13 @@ jobs:
       - run: node --version
       - run: npm i -g @railway/cli
       - run:
-          name: Verificar variable de entorno
-          command: 'echo "RAILWAY_TOKEN existe: ${RAILWAY_TOKEN:+sí}"'
-      - run:
-          name: Login to Railway
-          command: railway login --token $RAILWAY_TOKEN
-      - run:
           name: Deploy to Railway App
           command: |
             cd bankchurn-api
-            railway up --service=hospitable-passion
-            railway up --detach
-
-
+            echo "Desplegando a Railway con token..."
+            export RAILWAY_TOKEN=${RAILWAY_TOKEN}
+            railway up --service=hospitable-passion --ci
+            
 tags_only: &tags_only
   filters:
     branches:
